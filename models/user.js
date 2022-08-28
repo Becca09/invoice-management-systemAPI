@@ -20,6 +20,12 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, "please provide your password"],
         minLength: 8
+    },
+    role: {
+        type: String,
+    },
+    logoUrl: {
+        type: String,
     }
 },
 {
