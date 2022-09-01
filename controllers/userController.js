@@ -62,7 +62,9 @@ export const login = async (req, res, next) => {
     });
     return res.status(200).json({
         status: 'success',
-        token
+        token,
+        userId: user._id,
+        name: user.companyName
     })
   } catch (error) {
     return res.status(400).json({
@@ -106,7 +108,7 @@ export const requireAuth = async(req,res,next)=> {
         }
         console.log("found user... setting user field in requets obj")
         req.user = currentUser;
-        console.log("moving to next operation")
+        console.log("moving to next")
         next();
     } catch (error) {
         return res.status(400).json({

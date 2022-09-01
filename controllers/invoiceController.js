@@ -1,16 +1,19 @@
 import Invoice from "../models/invoice.js";
+import User from "../models/user.js";
+
 
 export const createInvoice = async (req, res, next) => {
+  const creatorId = req.params.creatorId;
   try {
     const {
-      customersName,
-      customersEmail,
-      phoneNumber,
-      customersAdress,
-      invoiceDate,
-      invoiceDescription,
-      invoiceItemList,
-      invoicePaymentDate,
+        customersName,
+        customersEmail,
+        phoneNumber,
+        customersAdress,
+        invoiceDate,
+        invoiceDescription,
+        invoiceItemList,
+        invoicePaymentDate,
     } = req.body;
 
     const newInvoice = await Invoice.create({
@@ -22,6 +25,7 @@ export const createInvoice = async (req, res, next) => {
       invoiceDescription,
       invoiceItemList,
       invoicePaymentDate,
+      creator: creatorId
     });
 
     return res.status(200).json({
@@ -44,6 +48,27 @@ export const getAllInvoices = async (req, res, next) => {
     allInvoices,
   });
 };
+
+export const getUserInvoices = async(req,res,next)=> {
+  try {
+    const userId = req.params.userId;
+    const user = await User.findById(userId);
+    if(!user){
+        throw new Error("No user found with id " + userId);
+    }
+    const userInvoices = await Invoice.find({creator: user._id});   
+    return res.status(200).json({
+      status: 'success',
+      userInvoices
+    }) 
+  } catch (error) {
+    return res.status(400).json({
+      status: "fail",
+      message: error.message,
+      error,
+    });
+  }
+}
 
 export const getInvoice = async (req, res, next) => {
   try {

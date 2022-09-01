@@ -21,7 +21,6 @@ const invoiceSchema = new mongoose.Schema({
 
   customersAdress: {
     type: String,
-    required: [true, "please provide an address"],
   },
 
   invoiceDate:{
@@ -31,7 +30,7 @@ const invoiceSchema = new mongoose.Schema({
 
   invoicePaymentDate:{
     type: String,
-    required:[true, "please enter a valide date"]
+    // required:[true, "please enter a valide date"]
   },
 
   invoiceDescription:{
@@ -41,6 +40,10 @@ const invoiceSchema = new mongoose.Schema({
   invoiceItemList:{
         type: [itemSchema],
         required:[true]
+  },
+  creator: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
   }
 })
 
