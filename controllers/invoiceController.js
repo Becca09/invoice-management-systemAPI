@@ -94,7 +94,7 @@ export const getInvoice = async (req, res, next) => {
 export const deleteInvoice = async (req, res, next) => {
   try {
     const invoiceId = req.params.invoiceId;
-    const user = await Invoice.findByIdAndUpdate(invoiceId);
+    const invoice = await Invoice.findByIdAndDelete(invoiceId);
     if (!invoice) {
       throw new Error(`Invoice with id ${userId} not found`);
     }
