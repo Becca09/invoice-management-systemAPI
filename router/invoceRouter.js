@@ -1,14 +1,15 @@
-import express from 'express';
-import { createInvoice, getAllInvoices, getUserInvoices,getInvoice, deleteInvoice, updateInvoice } from '../controllers/invoiceController.js';
+import express from 'express'; 
+import { createInvoice, getAllInvoices, getUserInvoices,getInvoice, deleteInvoice, updateInvoice, } from '../controllers/invoiceController.js';
+import { requireAuth } from '../controllers/userController.js';
 import Invoice from '../models/invoice.js';
 
 const invoiceRouter = express();
 
 
-invoiceRouter.route("/create/:creatorId").post(createInvoice)
-invoiceRouter.route("/:invoiceId").get(getInvoice).delete(deleteInvoice).patch(updateInvoice)
-invoiceRouter.route("/all").get(getAllInvoices)
-invoiceRouter.route("/user/:userId").get(getUserInvoices)
+invoiceRouter.route("/create/:creatorId").post(requireAuth,createInvoice)
+invoiceRouter.route("/:invoiceId").get(getInvoice).delete(requireAuth, deleteInvoice).patch(requireAuth, updateInvoice)
+invoiceRouter.route("/all").get(requireAuth, getAllInvoices)
+invoiceRouter.route("/user/:userId").get(requireAuth, getUserInvoices)
 
 
 export default invoiceRouter;                       
