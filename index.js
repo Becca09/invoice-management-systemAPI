@@ -3,7 +3,6 @@ import dotenv from 'dotenv'
 import app from './app.js';
 
 dotenv.config({path: "./config.env"})
-
 let url = process.env.NODE_ENV === "production" ? process.env.DATABASE_URL_PROD : process.env.DATABASE_URL;
 
 mongoose.connect(url, {

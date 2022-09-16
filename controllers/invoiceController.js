@@ -14,6 +14,7 @@ export const createInvoice = async (req, res, next) => {
         invoiceDescription,
         invoiceItemList,
         invoicePaymentDate,
+        status,
     } = req.body;
 
     const newInvoice = await Invoice.create({
@@ -25,7 +26,8 @@ export const createInvoice = async (req, res, next) => {
       invoiceDescription,
       invoiceItemList,
       invoicePaymentDate,
-      creator: creatorId
+      creator: creatorId,
+      status
     });
 
     return res.status(200).json({
@@ -96,7 +98,7 @@ export const deleteInvoice = async (req, res, next) => {
     const invoiceId = req.params.invoiceId;
     const invoice = await Invoice.findByIdAndDelete(invoiceId);
     if (!invoice) {
-      throw new Error(`Invoice with id ${userId} not found`);
+      throw new Error(`Invoice with id ${invoiceId} not found`);
     }
     return res.status(204).json({
       status: "success",
@@ -159,3 +161,40 @@ export const updateInvoice = async (req, res, next) => {
     });
   }
 };
+
+export const paymentStatus = async(req, res, next) => {
+try {
+  const invoiceId = req.params.invoiceId
+  const invoice = await Invoice.findById(invoiceId)
+  if (!invoice) {
+    throw new Error(`Invoice with id ${invoiceId} not found`);
+  }
+
+   if(invoice.status === true){
+     invoice.status = false;
+   }
+
+   else{
+        invoice.status = true;
+   }
+ 
+    await invoice.save()
+    
+    return res.status(200).json({
+      status: "success",
+      message: "payment has been updated successfully"
+    
+    })
+  }
+  
+catch (error) {
+  return res.status(400).json({
+    status: "fail",
+    message: error.message,
+    error,
+  });
+
+
+}
+
+}

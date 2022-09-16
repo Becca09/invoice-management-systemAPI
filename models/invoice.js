@@ -44,6 +44,11 @@ const invoiceSchema = new mongoose.Schema({
   creator: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
+  },
+
+  status: {
+   type: Boolean, 
+   default: false
   }
 })
 
