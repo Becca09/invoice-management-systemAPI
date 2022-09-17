@@ -1,7 +1,7 @@
 import express from 'express'; 
-import { createInvoice, getAllInvoices, getUserInvoices,getInvoice, deleteInvoice, updateInvoice, paymentStatus } from '../controllers/invoiceController.js';
+import { createInvoice, getAllInvoices, getUserInvoices, getInvoice, deleteInvoice, updateInvoice, paymentStatus } from '../controllers/invoiceController.js';
 import { requireAuth } from '../controllers/userController.js';
-import Invoice from '../models/invoice.js';
+
 
 const invoiceRouter = express();
 
